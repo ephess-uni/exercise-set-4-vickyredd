@@ -31,3 +31,9 @@ def num_shutdowns(logfile):
 if __name__ == "__main__":
     print(f'{num_shutdowns(FILENAME)=}')
     
+
+
+# The code below will call your function and print the results
+if __name__ == "__main__":
+    print(f'{num_shutdowns(FILENAME)=}')
+    
