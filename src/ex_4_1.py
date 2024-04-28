@@ -13,16 +13,17 @@ FILENAME = get_data_file_path('messages.log')
 
 def num_shutdowns(logfile):
     """
-    Counts the number of shutdown events in the log file.
+    Counts the number of complete shutdown events in the log file.
     
     Args:
         logfile (str): The path to the log file.
         
     Returns:
-        int: The number of shutdown events in the log file.
+        int: The number of complete shutdown events in the log file.
     """
     shutdown_events = get_shutdown_events(logfile)
-    return len(shutdown_events) // 2  # Each shutdown event has two entries
+    # Assuming each "Shutdown initiated" is paired with a "Shutdown complete"
+    return len(shutdown_events) // 2
 
 
 # The code below will call your function and print the results
