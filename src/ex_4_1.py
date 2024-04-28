@@ -25,16 +25,26 @@ def num_shutdowns(logfile):
     with open(logfile, 'r') as file:
         lines = file.readlines()
 
-    count = 0
+    shutdown_count = 0
     i = 0
     while i < len(lines):
-        if "Shutdown initiated" in lines[i] and i + 1 < len(lines) and "Shutdown complete" in lines[i + 1]:
-            count += 1
-            i += 2  # Skip to the next pair of shutdown lines
+        if "Shutdown initiated" in lines[i]:
+            # Look for corresponding "Shutdown complete" event
+            j = i + 1
+            while j < len(lines):
+                if "Shutdown complete" in lines[j]:
+                    shutdown_count += 1
+                    i = j + 1  # Move i to the line after "Shutdown complete"
+                    break
+                j += 1
+            else:
+                # If no "Shutdown complete" event is found, move to the next line
+                i += 1
         else:
             i += 1
 
-    return count
+    return shutdown_count
+
 
 
 # The code below will call your function and print the results
