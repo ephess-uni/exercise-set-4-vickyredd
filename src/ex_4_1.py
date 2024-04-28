@@ -22,15 +22,19 @@ def num_shutdowns(logfile):
         int: The number of shutdowns present in the file. Note: a single shutdown event will have two entries:
         "Shutdown initiated" and "Shutdown complete".
     """
-    shutdown_events = get_shutdown_events(logfile)
-    return len(shutdown_events) // 2
+    with open(logfile, 'r') as file:
+        lines = file.readlines()
 
+    count = 0
+    i = 0
+    while i < len(lines):
+        if "Shutdown initiated" in lines[i] and i + 1 < len(lines) and "Shutdown complete" in lines[i + 1]:
+            count += 1
+            i += 2  # Skip to the next pair of shutdown lines
+        else:
+            i += 1
 
-
-# The code below will call your function and print the results
-if __name__ == "__main__":
-    print(f'{num_shutdowns(FILENAME)=}')
-    
+    return count
 
 
 # The code below will call your function and print the results
